@@ -25,23 +25,31 @@ class _Venues extends State<Venues> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text(widgetName),
-      ),
-      body: new Center(
-          child: ListView(
-        children: venues
-            .map((venue) => new ListTile(
+        appBar: new AppBar(
+          title: new Text(widgetName),
+        ),
+        body: new Center(
+            child: ListView(
+                children: venues.map((venue) {
+          if (venue != null)
+            return new Card(
+                child: new ListTile(
+                  leading: Image.network(venue.iconUrl != null ? venue.iconUrl : ''),
                   title: new Text(venue.name),
+                  subtitle: new Text(venue.formattedAdress.join("\n")),
                   onTap:  () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => VenueView(venue)),
                     );
                   }
-                ))
-            .toList(),
-      )),
-    );
+            ));
+
+          return new Card(
+            child: new ListTile(
+              title: new Text('Failed to load data'),
+            ),
+          );
+        }).toList())));
   }
 }
