@@ -1,5 +1,6 @@
 import 'package:activities_search_engine/api/api.dart';
 import 'package:activities_search_engine/api/venue.dart';
+import 'package:activities_search_engine/widgets/venue-view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,12 @@ class _Venues extends State<Venues> {
         children: venues
             .map((venue) => new ListTile(
                   title: new Text(venue.name),
+                  onTap:  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VenueView(venue)),
+                    );
+                  }
                 ))
             .toList(),
       )),
