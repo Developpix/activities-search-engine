@@ -5,8 +5,10 @@ import 'package:http/http.dart';
 
 /// Factory Api pour réaliser les recherches.
 class Api {
+  /// Constante pour l'URL de récupération des activités.
   static final String venuesUrl =
       'https://api.foursquare.com/v2/venues/explore';
+  /// Constante pour l'URL de récupération des informations sur une activité.
   static final String venueUrl = 'https://api.foursquare.com/v2/venues';
 
   /// Rechercher des activités.
@@ -83,8 +85,36 @@ class Api {
       return null;
     }
 
+    // On appel le web service pour les photos sur l'activité et on stock la réponse.
+    final photosResponse = json.decode((await get(
+            'https://api.foursquare.com/v2/venues/${id}/photos?client_id=${DotEnv().env['CLIENT_ID']}&client_secret=${DotEnv().env['CLIENT_SECRET']}&v=20180323'))
+        .body);
+    List<String> photosUrl = [];
+    if (photosResponse['response'] != null &&
+        photosResponse['response']['photos'] != null &&
+        photosResponse['response']['photos']['items'] != null) {
+      for (final item in photosResponse['response']['photos']['items']) {
+          photosUrl.add(
+              '${item['prefix']}${item['width']}x${item['height']}${item['suffix']}');
+      }
+    }
+
+    // On appel le web service pour les commentaires sur l'activité et on stock la réponse.
+    final tipsResponse = json.decode((await get(
+            'https://api.foursquare.com/v2/venues/${id}/tips?client_id=${DotEnv().env['CLIENT_ID']}&client_secret=${DotEnv().env['CLIENT_SECRET']}&v=20180323'))
+        .body);
+    List<String> tips = [];
+    if (tipsResponse['response'] != null &&
+        tipsResponse['response']['tips'] != null &&
+        tipsResponse['response']['tips']['items'] != null) {
+      for (final item in tipsResponse['response']['tips']['items']) {
+        tips.add('${item['text']}');
+      }
+    }
+
     // On retourne l'activité créer à partir des ses informations
     // au format JSON.
-    return Venue.fromJson(json.decode(response.body)['response']['venue']);
+    return Venue.fromJson(
+        json.decode(response.body)['response']['venue'], photosUrl, tips);
   }
 }
