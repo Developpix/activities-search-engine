@@ -52,7 +52,7 @@ class _Venues extends State<Venues> {
 
               return new Card(
                 child: new ListTile(
-                  title: new Text('Failed to load data'),
+                  title: new Text('Failed to load data (quota exceeded)'),
                 ),
               );
             }));

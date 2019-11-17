@@ -51,7 +51,7 @@ class Api {
             // Pour chaque item ou recupère l'activité avec ses informations.
             Venue venue = await getVenue(items[j]['venue']['id']);
             // Si l'on a bien une activité on l'ajoute à la liste.
-            if (venue != null) venues.add(venue);
+            venues.add(venue);
           }
         }
       }
