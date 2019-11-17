@@ -7,9 +7,9 @@ class VenueView extends StatelessWidget {
 
   VenueView(this.venue);
 
-
   @override
   Widget build(BuildContext context) {
+    //Image.network(venue.iconUrl != null ? venue.iconUrl : '')
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: CustomScrollView(
@@ -22,21 +22,7 @@ class VenueView extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  /*Image.network(
-                    property.imgUrl,
-                    fit: BoxFit.cover,
-                  ),*/
-                  // This gradient ensures that the toolbar icons are distinct
-                  // against the background image.
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(0.0, -1.0),
-                        end: Alignment(0.0, -0.4),
-                        colors: <Color>[Color(0x60000000), Color(0x00000000)],
-                      ),
-                    ),
-                  ),
+                  Image.network(venue.iconUrl != null ? venue.iconUrl : ''),
                   Positioned(
                     bottom: 20,
                     left: 0,
@@ -63,67 +49,67 @@ class VenueView extends StatelessWidget {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(16),
-                  margin: const EdgeInsets.only(bottom: 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        this.venue.address,
-                        style: Theme.of(context)
-                            .textTheme
-                            .title
-                            .copyWith(fontSize: 24.0),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 16.0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.4),
-                          ),
-                        ),
-                      ),
-                    ],
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(this.venue.formattedAdress.join("\n"),
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 24.0),
                   ),
-                ),
-                Container(
-                  color: Colors.white,
-                  margin: const EdgeInsets.symmetric(vertical: 4.0),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Informations",
-                        style: Theme.of(context)
-                            .textTheme
-                            .title
-                            .copyWith(fontSize: 20),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 16.0),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.grey, width: 0.4),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Text(this.venue.address),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Text(
-                          "Autre info",
-                          style: Theme.of(context).textTheme.subtitle,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Text(
-                          "Autre info",
-                          style: Theme.of(context).textTheme.subtitle,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ]))
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              margin: const EdgeInsets.symmetric(vertical: 4.0),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Description",
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 20),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(this.venue.description),
+                  ),
+                  Text(
+                    "Locations",
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(this.venue.formattedAdress.join("\n")),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      "Autre info",
+                      style: Theme.of(context).textTheme.subtitle,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]))
         ],
       ),
     );

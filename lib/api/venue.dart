@@ -1,6 +1,7 @@
 class Venue {
   final String id;
   final String name;
+  final String description;
   final String address;
   final List<dynamic> formattedAdress;
   String postalCode;
@@ -14,8 +15,9 @@ class Venue {
   Venue(
       {this.id,
       this.name,
+      this.description,
       this.address,
-        this.formattedAdress,
+      this.formattedAdress,
       this.postalCode,
       this.cityName,
       this.state,
@@ -24,11 +26,14 @@ class Venue {
       this.longitude});
 
   factory Venue.fromJson(Map<String, dynamic> json) {
+    print(json);
+
     Venue venue = Venue(
         id: json['id'],
         name: json['name'],
         address: json['location']['address'],
-        formattedAdress: json['location']['formattedAddress'],
+        description: json['description'] != null ? json['description'] : 'No description found',
+        formattedAdress: json['location']['formattedAddress'] != null ? json['location']['formattedAddress'] : ['No adress found'],
         postalCode: json['location']['postalCode'],
         cityName: json['location']['city'],
         state: json['location']['state'],
@@ -36,9 +41,9 @@ class Venue {
         latitude: json['location']['lat'].toString(),
         longitude: json['location']['lng'].toString());
 
-    if(json['photos']['groups'].length > 0
-    && json['photos']['groups'][0]['items'].length > 0)
-        venue.iconUrl = '${json['photos']['groups'][0]['items'][0]['prefix']}${json['photos']['groups'][0]['items'][0]['width']}x${json['photos']['groups'][0]['items'][0]['height']}${json['photos']['groups'][0]['items'][0]['suffix']}';
+    if (json['bestPhoto'] != null)
+      venue.iconUrl =
+          '${json['bestPhoto']['prefix']}${json['bestPhoto']['width']}x${json['bestPhoto']['height']}${json['bestPhoto']['suffix']}';
 
     return venue;
   }

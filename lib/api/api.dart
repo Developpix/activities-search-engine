@@ -51,10 +51,17 @@ class Api {
     print('Load Venue from ${venueUrl}/${id}?client_id=${DotEnv().env['CLIENT_ID']}&client_secret=${DotEnv().env['CLIENT_SECRET']}&v=20180323');
 
     if (json.decode(response.body)['meta'] != null && json.decode(response.body)['meta']['code'].toString() != '200') {
-      print('Failed load Venue');
+      print('Failed load Venue ${json.decode(response.body)}');
       return null;
     }
 
     return Venue.fromJson(json.decode(response.body)['response']['venue']);
+  }
+}
+
+// TODO
+class QuotaExceededException extends Exception {
+  QuotaExceededException(String message) {
+    Ece(message);
   }
 }
