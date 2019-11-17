@@ -2,9 +2,12 @@ import 'package:activities_search_engine/api/venue.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Widget affichant les détails d'une activité.
 class VenueView extends StatelessWidget {
+  /// L'activité associée.
   final Venue venue;
 
+  /// Constructeur du Widget.
   VenueView(this.venue);
 
   @override
@@ -22,7 +25,7 @@ class VenueView extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(venue.iconUrl != null ? venue.iconUrl : ''),
+                  venue.iconUrl != null ? Image.network(venue.iconUrl) :  new Icon(Icons.block, size: 128.0),
                   Positioned(
                     bottom: 20,
                     left: 0,

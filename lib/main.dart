@@ -1,10 +1,12 @@
 import 'package:activities_search_engine/widgets/venues.dart';
 import 'package:flutter/material.dart';
 
+/// Fonction principal.
 void main() {
     runApp(MyApp());
 }
 
+/// Activité principal.
 class MyApp extends StatelessWidget {
     // This widget is the root of your application.
     @override
