@@ -1,6 +1,7 @@
 import 'package:activities_search_engine/api/venue.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Widget affichant les détails d'une activité.
 class VenueView extends StatelessWidget {
@@ -25,7 +26,9 @@ class VenueView extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  venue.iconUrl != null ? Image.network(venue.iconUrl) :  new Icon(Icons.block, size: 128.0),
+                  venue.iconUrl != null
+                      ? Image.network(venue.iconUrl)
+                      : new Icon(Icons.block, size: 128.0),
                   Positioned(
                     bottom: 20,
                     left: 0,
@@ -59,7 +62,8 @@ class VenueView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(this.venue.formattedAdress.join("\n"),
+                  Text(
+                    this.venue.formattedAdress.join("\n"),
                     style: Theme.of(context)
                         .textTheme
                         .title
@@ -103,10 +107,22 @@ class VenueView extends StatelessWidget {
                     child: Text(this.venue.formattedAdress.join("\n")),
                   ),
                   Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(this.venue.canonicalUrl),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Text(
-                      "Autre info",
-                      style: Theme.of(context).textTheme.subtitle,
+                    child: IconButton(
+                      icon: Icon(Icons.map),
+                      onPressed: () {
+                        String googleUrl =
+                            'https://www.google.com/maps/search/?api=1&query=${venue.latitude},${venue.longitude}';
+                        if (canLaunch(googleUrl) != null) {
+                          launch(googleUrl);
+                        } else {
+                          throw 'Could not open the map.';
+                        }
+                      },
                     ),
                   ),
                 ],
